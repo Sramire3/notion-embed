@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Status</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Member Name</th>
+                <th>Email</th>
+                <th>Membership Status</th>
+                <th>GBM Points (2)</th>
+                <th>Community Service/Study Hall Points (1)</th>
+                <th>Fundraiser Points (1)</th>
+            </tr>
+        </thead>
+        <tbody id="membership-table">
+            <!-- Rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        const members = [
+            { name: "John Doe", email: "john@example.com", gbmPoints: 2, csPoints: 1, fundraiserPoints: 1 },
+            { name: "Jane Smith", email: "jane@example.com", gbmPoints: 2, csPoints: 1, fundraiserPoints: 1 },
+            { name: "Alex Brown", email: "alex@example.com", gbmPoints: 0, csPoints: 0, fundraiserPoints: 0 }
+        ];
+
+        function getStatus(gbmPoints, csPoints, fundraiserPoints) {
+            if (gbmPoints > 0 && csPoints > 0 && fundraiserPoints > 0) {
+                return "Active";
+            } else if (gbmPoints > 0 || csPoints > 0 || fundraiserPoints > 0) {
+                return "Pending";
+            } else {
+                return "Inactive";
+            }
+        }
+
+        function populateTable() {
+            const tableBody = document.getElementById('membership-table');
+            members.forEach(member => {
+                member.status = getStatus(member.gbmPoints, member.csPoints, member.fundraiserPoints);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${member.name}</td>
+                    <td>${member.email}</td>
+                    <td>${member.status}</td>
+                    <td>${member.gbmPoints}</td>
+                    <td>${member.csPoints}</td>
+                    <td>${member.fundraiserPoints}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', populateTable);
+    </script>
+</body>
+</html>
